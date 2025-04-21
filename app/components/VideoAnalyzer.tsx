@@ -15,7 +15,7 @@ export default function VideoAnalyzer() {
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [transcript, setTranscript] = useState<TranscriptItem[]>([]);
+  // const [transcript, setTranscript] = useState<TranscriptItem[]>([]);
   const [analysis, setAnalysis] = useState('');
   const [videoId, setVideoId] = useState('');
 
@@ -32,7 +32,7 @@ export default function VideoAnalyzer() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setTranscript([]);
+    // setTranscript([]);
     setAnalysis('');
     
     const extractedVideoId = extractVideoId(url);
@@ -59,7 +59,7 @@ export default function VideoAnalyzer() {
       }
 
       const transcriptData = await transcriptResponse.json();
-      setTranscript(transcriptData.transcript);
+      // setTranscript(transcriptData.transcript);
       
       // Get analysis
       const analysisResponse = await fetch('/api/analyze', {

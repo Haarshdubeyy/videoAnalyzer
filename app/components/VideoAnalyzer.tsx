@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Youtube, Loader2 } from 'lucide-react';
-import { Button } from './ui/button';
 
 interface TranscriptItem {
   text: string;
@@ -58,62 +57,52 @@ export default function VideoAnalyzer() {
   };
 
   return (
-    <div className="card bg-base-100 shadow-xl">
-      <div className="card-body">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="form-control">
-            <div className="input-group">
-              <span className="btn btn-square bg-white border border-gray-200">
-                <Youtube className="w-6 h-6 text-red-600" />
-              </span>
-              <input
-                type="text"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                placeholder="Enter YouTube URL (e.g., https://www.youtube.com/watch?v=pcC4Dr6Wj2Q)"
-                className="input input-bordered w-full bg-white"
-              />
-              <Button
-                type="submit"
-                disabled={loading}
-                variant="default"
-                size="default"
-                className="bg-white text-black hover:bg-gray-100 border border-gray-200"
-              >
-                {loading ? (
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                ) : (
-                  'Analyze'
-                )}
-              </Button>
+    <div className="bg-white rounded-lg shadow p-6">
+      <form onSubmit={handleSubmit} className="mb-6">
+        <div className="flex gap-4">
+          <div className="relative flex-1">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Youtube className="h-5 w-5 text-youtube" />
+            </div>
+            <input
+              type="text"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              placeholder="Enter YouTube URL"
+              className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-youtube focus:border-transparent"
+              disabled={loading}
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="px-4 py-2 bg-youtube text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed min-w-[100px] flex items-center justify-center"
+          >
+            {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Analyze'}
+          </button>
+        </div>
+      </form>
+
+      {error && (
+        <div className="p-4 mb-6 bg-red-50 border border-red-200 rounded-md">
+          <p className="text-sm text-red-600">{error}</p>
+        </div>
+      )}
+
+      {transcript.length > 0 && (
+        <div>
+          <h2 className="text-xl font-semibold mb-4">Transcript</h2>
+          <div className="bg-gray-50 rounded-md border p-4">
+            <div className="max-h-96 overflow-y-auto space-y-2">
+              {transcript.map((item, index) => (
+                <p key={index} className="text-gray-700">
+                  {item.text}
+                </p>
+              ))}
             </div>
           </div>
-        </form>
-
-        {error && (
-          <div className="alert alert-error mt-4">
-            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>{error}</span>
-          </div>
-        )}
-
-        {transcript.length > 0 && (
-          <div className="mt-8">
-            <h2 className="text-2xl font-bold mb-4">Transcript</h2>
-            <div className="card bg-white border border-gray-200">
-              <div className="card-body max-h-96 overflow-y-auto">
-                {transcript.map((item, index) => (
-                  <p key={index} className="mb-2 text-black">
-                    {item.text}
-                  </p>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 } 

@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import { Youtube, Loader2, BookOpen, Lightbulb, MessageSquare, CheckCircle } from 'lucide-react';
 import VideoThumbnail from './VideoThumbnail';
 
-interface TranscriptItem {
-  text: string;
-  duration: number;
-  offset: number;
-}
+// interface TranscriptItem {
+//   text: string;
+//   duration: number;
+//   offset: number;
+// }
 
 export default function VideoAnalyzer() {
   const [mounted, setMounted] = useState(false);

@@ -41,7 +41,7 @@ export async function GET(request: Request) {
       .replace('M', ':')
       .replace('S', '')
       .split(':')
-      .map(part => part.padStart(2, '0'))
+      .map((part: string) => part.padStart(2, '0'))
       .join(':');
 
     return NextResponse.json({
